@@ -11,16 +11,31 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 COMPONENTS Core Gui Network Widgets REQUIRED)
 
-add_library(QSimpleUpdater
-    etc/resources/qsimpleupdater.qrc
-    src/Downloader.ui
-    src/Downloader.cpp
-    src/Downloader.h
-    src/Updater.cpp
-    src/Updater.h
-    src/QSimpleUpdater.cpp
-    include/QSimpleUpdater.h
-)
+if (BUILD_STATIC)
+    set(CMAKE_STATIC_LIBRARY_SUFFIX "_static${CMAKE_STATIC_LIBRARY_SUFFIX}")
+    add_library(QSimpleUpdater STATIC
+        etc/resources/qsimpleupdater.qrc
+        src/Downloader.ui
+        src/Downloader.cpp
+        src/Downloader.h
+        src/Updater.cpp
+        src/Updater.h
+        src/QSimpleUpdater.cpp
+        include/QSimpleUpdater.h
+    )
+else()
+    add_library(QSimpleUpdater SHARED
+        etc/resources/qsimpleupdater.qrc
+        src/Downloader.ui
+        src/Downloader.cpp
+        src/Downloader.h
+        src/Updater.cpp
+        src/Updater.h
+        src/QSimpleUpdater.cpp
+        include/QSimpleUpdater.h
+    )
+endif()
+
 target_link_libraries(QSimpleUpdater PRIVATE Qt5::Widgets Qt5::Network)
 target_include_directories(QSimpleUpdater PUBLIC include/)
 target_include_directories(QSimpleUpdater PRIVATE src/)
