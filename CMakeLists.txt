@@ -9,7 +9,8 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 COMPONENTS Core Gui Network Widgets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Core Gui Network Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Network Widgets REQUIRED)
 
 if (BUILD_STATIC)
     set(CMAKE_STATIC_LIBRARY_SUFFIX "_static${CMAKE_STATIC_LIBRARY_SUFFIX}")
@@ -36,7 +37,7 @@ else()
     )
 endif()
 
-target_link_libraries(QSimpleUpdater PRIVATE Qt5::Widgets Qt5::Network)
+target_link_libraries(QSimpleUpdater PRIVATE Qt::Widgets Qt::Network)
 target_include_directories(QSimpleUpdater PUBLIC include/)
 target_include_directories(QSimpleUpdater PRIVATE src/)
 target_compile_definitions(QSimpleUpdater PRIVATE -DQSU_INCLUDE_MOC)
